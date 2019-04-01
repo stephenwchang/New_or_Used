@@ -1,9 +1,8 @@
-# Project One Awesome Boilerplate
+# Project One Awesome Boilerplate 🍛
 
 Before getting started, as a general rule of thumb, you should be running the commands you see within the project directory. If you experience errors, your first check should be to run `pwd` and ensure the folder name you see returned is the one you should be in.
 
 ## First Time Setup
-
 SKIP THIS IF YOU ALREADY HAVE DOCKER INSTALLED ON YOUR MACHINE
 
 Only do this the first time you clone the repo. All you need to do is install docker and make sure it's running.
