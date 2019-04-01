@@ -1,0 +1,17 @@
+
+version: '3'
+
+services:
+  project_one:
+    build: .
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/project_one
+      - ./docker_ssh:/root/.ssh
+    tty: true
+    networks:
+      - local
+networks:
+  local:
+    external: true

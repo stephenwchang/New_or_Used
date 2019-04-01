@@ -1,0 +1,32 @@
+{
+  "name": "project_one_boilerplate",
+  "version": "1.0.0",
+  "description": "A toolkit / boilerplate for RUTSOMFSF021202",
+  "main": "index.js",
+  "author": "Dan Vassallo",
+  "license": "MIT",
+  "scripts": {
+    "dev-osx": "yarn docker-ensure-start-osx && yarn docker-exec \"./node_modules/.bin/nodemon index.js\"",
+    "dev-win": "yarn docker-ensure-start-win && yarn docker-exec \"./node_modules/.bin/nodemon index.js\"",
+    "start": "node index.js",
+    "generate-screen": "node ./utils/generateScreenAndRoute.js",
+    "rebuild": "yarn docker-remove-network && yarn first-time-setup",
+    "first-time-setup": "yarn docker-create-network && yarn docker-build && docker-compose up -d",
+    "docker-create-network": "docker network create local",
+    "docker-ssh": "docker-compose exec project_one bash",
+    "docker-build": "docker-compose down && docker-compose build",
+    "docker-exec": "docker-compose exec project_one sh -c",
+    "docker-remove-network": "docker-compose down && docker network rm local",
+    "docker-ensure-start-osx": "if [ -z `docker ps -q --no-trunc | grep $(docker-compose ps -q project_one)` ]; then docker-compose up -d; fi",
+    "docker-ensure-start-win": "docker container inspect projectoneboiler_project_one_1 || docker-compose up -d"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
