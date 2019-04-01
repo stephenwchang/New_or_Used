@@ -6,8 +6,7 @@
   "author": "Dan Vassallo",
   "license": "MIT",
   "scripts": {
-    "dev-osx": "yarn docker-ensure-start-osx && yarn docker-exec \"./node_modules/.bin/nodemon index.js\"",
-    "dev-win": "yarn docker-ensure-start-win && yarn docker-exec \"./node_modules/.bin/nodemon index.js\"",
+    "dev": "yarn docker-ensure-start && yarn docker-exec \"./node_modules/.bin/nodemon index.js\"",
     "start": "node index.js",
     "generate-screen": "node ./utils/generateScreenAndRoute.js",
     "rebuild": "yarn docker-remove-network && yarn first-time-setup",
@@ -17,10 +16,8 @@
     "docker-build": "docker-compose down && docker-compose build",
     "docker-exec": "docker-compose exec project_one sh -c",
     "docker-remove-network": "docker-compose down && docker network rm local",
-    "docker-ensure-start-osx": "if [ -z `docker ps -q --no-trunc | grep $(docker-compose ps -q project_one)` ]; then docker-compose up -d; fi",
-    "docker-ensure-start-win": "docker container inspect projectoneboiler_project_one_1 || docker-compose up -d",
-    "lint": "yarn lint-fix && ./node_modules/.bin/eslint --ext .js ./public/javascript/",
-    "lint-fix": "./node_modules/.bin/eslint --ext .js ./public/javascript/ --fix",
+    "docker-ensure-start": "docker container inspect project_one_boiler_project_one_1 || docker-compose up -d",
+    "lint-fix": "yarn docker-ensure-start && yarn docker-exec \"./node_modules/.bin/eslint --ext .js ./public/javascript/ --fix",
     "reset-hard": "git reset --hard && git clean -f -d"
   },
   "dependencies": {
@@ -38,7 +35,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "yarn lint"
+      "pre-push": "yarn lint-fix"
     }
   }
 }

@@ -49,8 +49,7 @@ If you get authorization errors, run `docker logout` and repeat the above steps
 
 ## Using The Dev Environment Any Other Time
 
-* Windows Users: To start the container and server run `yarn dev-win` You may need to use Powershell or cmd as opposed to gitbash for some docker stuff.
-* Mac Users: To start the container and server run `yarn dev-osx`
+To start the container and server run `yarn dev` On Windows, you may need to use Powershell or cmd as opposed to gitbash for some docker stuff.
 
 Visit `localhost:3000` in your chrome browser and you will see the `index.html`
 
