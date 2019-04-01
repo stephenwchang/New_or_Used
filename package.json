@@ -20,7 +20,8 @@
     "docker-ensure-start-osx": "if [ -z `docker ps -q --no-trunc | grep $(docker-compose ps -q project_one)` ]; then docker-compose up -d; fi",
     "docker-ensure-start-win": "docker container inspect projectoneboiler_project_one_1 || docker-compose up -d",
     "lint": "yarn lint-fix && ./node_modules/.bin/eslint --ext .js ./public/javascript/",
-    "lint-fix": "./node_modules/.bin/eslint --ext .js ./public/javascript/ --fix"
+    "lint-fix": "./node_modules/.bin/eslint --ext .js ./public/javascript/ --fix",
+    "reset-hard": "git reset --hard && git clean -f -d"
   },
   "dependencies": {
     "eslint": "^5.16.0",
