@@ -38,7 +38,6 @@ If you have not already installed yarn, do so now.
 Get into the project directory first and then run the following.
 
 ```
-yarn install
 yarn first-time-setup
 ```
 
