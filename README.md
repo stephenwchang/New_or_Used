@@ -34,7 +34,11 @@ If you have not already installed yarn, do so now.
 * Mac Users: Using Homebrew Install Yarn like this: `brew install yarn`
 
 #### 4) Building The Image
+
+Get into the project directory first and then run the following.
+
 ```
+yarn install
 yarn first-time-setup
 ```
 
@@ -42,11 +46,9 @@ IF THIS DOES NOT WORK TRY RUNNING `docker-compose up` first and then rerun `yarn
 
 Note: On Windows you will need to give admin access and a login screen will come up. You need to give it your PC password to allow Docker to run.
 
-If you get authorization errors, run `docker logout`
+If you get authorization errors, run `docker logout` and repeat the above steps
 
 ## Using The Dev Environment Any Other Time
-
-NOTE: If you need to close the Docker process in terminal at any time you can use either `ctrl + d` or `ctrl + c`
 
 * Windows Users: To start the container and server run `yarn dev-win` You may need to use Powershell or cmd as opposed to gitbash for some docker stuff.
 * Mac Users: To start the container and server run `yarn dev-osx`
@@ -69,6 +71,7 @@ public
 
 If you run into any problems, first try to run `yarn rebuild` if that doesn't work restart your machine and run it again.
 
+NOTE: If you need to close the Docker process in terminal at any time you can use either `ctrl + d` or `ctrl + c`
 
 ## Screen Generator
 
