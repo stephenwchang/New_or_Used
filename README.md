@@ -30,6 +30,7 @@ public
  --images <- put your images here
 ...
 ```
+For purposes of project one, no other folders need to be touched.
 
 ## Screen Generator
 
