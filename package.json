@@ -17,9 +17,11 @@
     "docker-exec": "docker-compose exec project_one_boiler sh -c",
     "docker-remove-network": "docker-compose down && docker network rm local",
     "docker-ensure-start": "docker container inspect project_one_boiler_project_one_boiler_1 || docker-compose up -d",
-    "lint-fix": "yarn docker-ensure-start && yarn docker-exec \"./node_modules/.bin/eslint --ext .js ./public/javascript/ --fix",
+    "lint-fix": "yarn docker-ensure-start && yarn docker-exec \"./node_modules/.bin/eslint --ext .js ./public/javascript/ --fix\"",
+    "lint-fix-host": "./node_modules/.bin/eslint --ext .js ./public/javascript/ --fix",
     "reset-hard": "git reset --hard && git clean -f -d",
-    "docker-destroy": "docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images -q)"
+    "docker-destroy": "docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images -q)",
+    "start-dev": "./node_modules/.bin/nodemon index.js"
   },
   "dependencies": {
     "eslint": "^5.16.0",
@@ -36,7 +38,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "yarn lint-fix"
+      "pre-push": "yarn lint-fix-host"
     }
   }
 }
