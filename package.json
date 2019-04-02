@@ -1,5 +1,5 @@
 {
-  "name": "project_one_boilerplate",
+  "name": "project_one_boiler",
   "version": "1.0.0",
   "description": "A toolkit / boilerplate for RUTSOMFSF021202",
   "main": "index.js",
@@ -12,13 +12,14 @@
     "rebuild": "yarn docker-remove-network && yarn first-time-setup",
     "first-time-setup": "yarn docker-create-network && yarn docker-build && docker-compose up -d",
     "docker-create-network": "docker network create local",
-    "docker-ssh": "docker-compose exec project_one bash",
+    "docker-ssh": "docker-compose exec project_one_boiler bash",
     "docker-build": "docker-compose down && docker-compose build",
-    "docker-exec": "docker-compose exec project_one sh -c",
+    "docker-exec": "docker-compose exec project_one_boiler sh -c",
     "docker-remove-network": "docker-compose down && docker network rm local",
-    "docker-ensure-start": "docker container inspect project_one_boiler_project_one_1 || docker-compose up -d",
+    "docker-ensure-start": "docker container inspect project_one_boiler_project_one_boiler_1 || docker-compose up -d",
     "lint-fix": "yarn docker-ensure-start && yarn docker-exec \"./node_modules/.bin/eslint --ext .js ./public/javascript/ --fix",
-    "reset-hard": "git reset --hard && git clean -f -d"
+    "reset-hard": "git reset --hard && git clean -f -d",
+    "docker-destroy": "docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images -q)"
   },
   "dependencies": {
     "eslint": "^5.16.0",

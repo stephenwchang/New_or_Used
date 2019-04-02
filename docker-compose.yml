@@ -2,13 +2,14 @@
 version: '3'
 
 services:
-  project_one:
+  project_one_boiler:
     build: .
     ports:
       - 3000:3000
     volumes:
-      - .:/project_one
+      - .:/project_one_boiler
       - ./docker_ssh:/root/.ssh
+      - /project_one_boiler/node_modules
     tty: true
     networks:
       - local
