@@ -3,7 +3,7 @@ const path = require('path');
 
 const baseFile = path.join('utils/base.html')
 const copiedFile = path.join(`public/html/${process.argv[2]}.html`)
-const newRoute = `app.get('/${process.argv[2]}', (req, res) => res.sendFile(html_dir + \'${process.argv[2]}.html\', { root: __dirname }))`
+const newRoute = `app.get('/${process.argv[2]}', (req, res) => res.sendFile(html_dir + \'${process.argv[2]}.html\', { root: __dirname }))\n`
 
 fs.copyFile(baseFile, copiedFile, (err) => {
   if (err) throw err;
