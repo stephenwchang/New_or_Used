@@ -1,3 +1,4 @@
+
 var config = {
     apiKey: "AIzaSyAqu9o7oWo8Zycr-T4lhoCn0tl_vhsnn2Q",
     authDomain: "api-price-comparison.firebaseapp.com",
