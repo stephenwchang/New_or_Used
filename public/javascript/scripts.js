@@ -13,7 +13,9 @@ var database = firebase.database();
 
 var img = $('<img id="dynamic">');
 img.attr('src', responseObject.imgurl);
-img.appendTo('#imagediv');
+img.attr("class", "img-fluid");
+img.appendTo('#get-response-pic');
+
 
 var APIkey = "f0958fd1e2c9b9dee0e63dd6ca3dfaa0"
 var eBidQueryURL = "ebidapilink" + artist + APIkey;
