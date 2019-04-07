@@ -6,8 +6,9 @@ body {
   color: black;
 }
 
-#outputrow{
-  width: 510px;
+#outputrow {
+  background: white;
+  opacity: 0.8
 }
 
 .walmartimg{

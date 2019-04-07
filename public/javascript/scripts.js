@@ -1,3 +1,5 @@
+$.backstretch("../images/background.gif");
+
 $(function () {
     $('[data-toggle="popover"]').popover()
 })
@@ -41,9 +43,9 @@ function walmartSearch() {
         for (i=0; i<response.items.length; i++) {
             var trunD = prettyU(response.items[i].shortDescription)
             console.log("prettyU check:  " + trunD)
-            var newDiv = $("<a>")
+            var newDiv = $("<div>")
             newDiv.html(response.items[i].name)
-            newDiv.attr("class", "col-12 walmart-output")
+            newDiv.attr("class", "col-8 walmart-output")
             newDiv.attr("data-content", "<a> Price:  $"+ response.items[i].salePrice + "</a> <br> <a>" + truncate(trunD, 180) + "</a> <br> <img height='250px' width='250'px src="+ response.items[i].largeImage + ">")
             newDiv.attr("data-toggle", "popover")
             newDiv.attr("data-placement", "right")
@@ -58,6 +60,17 @@ function walmartSearch() {
 
 $("#searchBTN").click(function(event){
     event.preventDefault();
+    $("#outputrow").empty()
     searchTerm = $("#input").val()
     walmartSearch()
+})
+
+$("#input").keypress(function(){
+  var keycode = (event.keyCode ? event.keyCode : event.which);
+  if(keycode == '13'){
+    event.preventDefault();
+    $("#outputrow").empty()
+    searchTerm = $("#input").val()
+    walmartSearch()
+  }
 })
