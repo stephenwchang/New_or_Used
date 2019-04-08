@@ -1,27 +1,76 @@
+$.backstretch("../images/background.gif");
 
-var config = {
-    apiKey: "AIzaSyAqu9o7oWo8Zycr-T4lhoCn0tl_vhsnn2Q",
-    authDomain: "api-price-comparison.firebaseapp.com",
-    databaseURL: "https://api-price-comparison.firebaseio.com",
-    projectId: "api-price-comparison",
-    storageBucket: "",
-    messagingSenderId: "970000015156"
-  };
-firebase.initializeApp(config);
+$(function () {
+    $('[data-toggle="popover"]').popover()
+})
 
-var database = firebase.database();
+$(document).on("click", ".walmart-output", function(){
+    $(function () {
+        $('.walmart-output').popover()
+    })    
+})
 
-var img = $('<img id="dynamic">');
-img.attr('src', responseObject.imgurl);
-img.attr("class", "img-fluid");
-img.appendTo('#get-response-pic');
+function truncate(string, x) {
+  if (string.length > x) {
+    y = string.substring(0, x)
+    return y + " (. . .) "
+  }
+  else {return string}
 
+}
 
-var APIkey = "f0958fd1e2c9b9dee0e63dd6ca3dfaa0"
-var eBidQueryURL = "ebidapilink" + artist + APIkey;
-$.ajax({
-    url: eBidQueryURL,
-    method: "GET"
-}).then(function (response) {
-    console.log(response);
-});
+function prettyU(string) {
+  if (string === undefined) {
+    console.log("prettyU fired!")
+    return "No Item Summary"
+  }
+
+  else {return string}
+}
+
+var searchTerm = ""
+function walmartSearch() {
+    var queryURL = "https://api.walmartlabs.com/v1/search?apiKey=d7hjdvye4sky5cdwmmmtf3bf&query=" + searchTerm   
+
+    $.ajax({
+      url: queryURL,
+      method: "GET",
+      dataType: 'JSONP',
+    }).then(function(response) {
+        console.log(response)
+
+        
+        for (i=0; i<response.items.length; i++) {
+            var trunD = prettyU(response.items[i].shortDescription)
+            console.log("prettyU check:  " + trunD)
+            var newDiv = $("<div>")
+            newDiv.html(response.items[i].name)
+            newDiv.attr("class", "col-8 walmart-output")
+            newDiv.attr("data-content", "<a> Price:  $"+ response.items[i].salePrice + "</a> <br> <a>" + truncate(trunD, 180) + "</a> <br> <img height='250px' width='250'px src="+ response.items[i].largeImage + ">")
+            newDiv.attr("data-toggle", "popover")
+            newDiv.attr("data-placement", "right")
+            newDiv.attr("data-trigger", "focus")
+            newDiv.attr("tabindex", 0)
+            newDiv.attr("title", response.items[i].name)
+            newDiv.attr("data-html", "true")
+            newDiv.appendTo("#outputrow")
+        }
+    })
+}
+
+$("#searchBTN").click(function(event){
+    event.preventDefault();
+    $("#outputrow").empty()
+    searchTerm = $("#input").val()
+    walmartSearch()
+})
+
+$("#input").keypress(function(){
+  var keycode = (event.keyCode ? event.keyCode : event.which);
+  if(keycode == '13'){
+    event.preventDefault();
+    $("#outputrow").empty()
+    searchTerm = $("#input").val()
+    walmartSearch()
+  }
+})
