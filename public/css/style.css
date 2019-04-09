@@ -6,6 +6,9 @@ body {
   color: black;
 }
 
+.popover {
+  max-width: 450px;
+}
 #outputrow {
   background: white;
   opacity: 0.8
