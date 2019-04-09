@@ -3,43 +3,47 @@
 $.backstretch("../images/background.gif");
 
 $(function () {
-    $('[data-toggle="popover"]').popover()
+  $('[data-toggle="popover"]').popover()
 })
 
-$(document).on("click", ".walmart-output", function(){
-    $(function () {
-        $('.walmart-output').popover()
-    })
+
+$(document).on("click", ".walmart-output", function () {
+  $(function () {
+    $('.walmart-output').popover()
+  })
 })
 
 function truncate(string, x) {
   if (string.length > x) {
     y = string.substring(0, x)
     return y + " (. . .) "
+  } else {
+    return string
   }
-  else {return string}
-
 }
 
 function prettyU(string) {
   if (string === undefined) {
     console.log("prettyU fired!")
     return "No Item Summary"
+  } else {
+    return string
   }
-
-  else {return string}
 }
 
 var searchTerm = ""
-function walmartSearch() {
-    var queryURL = "https://api.walmartlabs.com/v1/search?apiKey=d7hjdvye4sky5cdwmmmtf3bf&query=" + searchTerm
 
-    $.ajax({
-      url: queryURL,
-      method: "GET",
-      dataType: 'JSONP',
-    }).then(function(response) {
-        console.log(response)
+function walmartSearch() {
+
+  var queryURL = "https://api.walmartlabs.com/v1/search?apiKey=d7hjdvye4sky5cdwmmmtf3bf&query=" + searchTerm
+
+  $.ajax({
+    url: queryURL,
+    method: "GET",
+    dataType: 'JSONP',
+  }).then(function (response) {
+    console.log(response)
+
 
 
         for (i=0; i<response.items.length; i++) {
@@ -76,18 +80,19 @@ function walmartSearch() {
 
         }
     })
+
 }
 
-$("#searchBTN").click(function(event){
-    event.preventDefault();
-    $("#outputrow").empty()
-    searchTerm = $("#input").val()
-    walmartSearch()
+$("#searchBTN").click(function (event) {
+  event.preventDefault();
+  $("#outputrow").empty()
+  searchTerm = $("#input").val()
+  walmartSearch()
 })
 
-$("#input").keypress(function(){
+$("#input").keypress(function () {
   var keycode = (event.keyCode ? event.keyCode : event.which);
-  if(keycode == '13'){
+  if (keycode == '13') {
     event.preventDefault();
     $("#outputrow").empty()
     searchTerm = $("#input").val()

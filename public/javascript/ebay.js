@@ -1,21 +1,23 @@
 $.backstretch('../images/background.gif');
 
-$(() => {
-  $('[data-toggle="popover"]').popover();
-});
 
-$(document).on('click', '.ebay-output', () => {
-  $(() => {
-    $('.ebay-output').popover();
-  });
-});
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+
+$(document).on("click", ".ebay-output", function () {
+  $(function () {
+    $('.ebay-output').popover()
+  })
+})
 
 function truncate(string, x) {
   if (string.length > x) {
-    y = string.substring(0, x);
-    return `${y} (. . .) `;
+    y = string.substring(0, x)
+    return y + " (. . .) "
+  } else {
+    return string
   }
-  return string;
 }
 
 function prettyU(string) {
@@ -65,6 +67,7 @@ $('#searchBTN').click((event) => {
 
 $('#input').keypress(() => {
   const keycode = (event.keyCode ? event.keyCode : event.which);
+
   if (keycode == '13') {
     event.preventDefault();
     $('#outputrow').empty();
