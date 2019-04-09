@@ -22,7 +22,6 @@ function truncate(string, x) {
 
 function prettyU(string) {
   if (string === undefined) {
-    console.log('prettyU fired!');
     return 'No Item Summary';
   }
 
@@ -38,9 +37,6 @@ function ebaySearch() {
     method: 'GET',
     dataType: 'JSONP',
   }).then((response) => {
-    console.log(response.findItemsByKeywordsResponse[0].searchResult[0].item[0].sellingStatus.currentPrice);
-    console.log(response.findItemsByKeywordsResponse[0].searchResult[0].item[0].galleryURL);
-    console.log(response.findItemsByKeywordsResponse[0].searchResult[0].item[0].title);
 
     for (i = 0; i < response.findItemsByKeywordsResponse[0].searchResult[0].item.length; i++) {
       const newDiv = $('<div>');

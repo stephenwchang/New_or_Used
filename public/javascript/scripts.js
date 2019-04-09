@@ -26,7 +26,6 @@ function truncate(string, x) {
 
 function prettyU(string) {
   if (string === undefined) {
-    console.log("prettyU fired!")
     return "No Item Summary"
   } else {
     return string
@@ -44,7 +43,6 @@ function walmartSearch() {
     method: "GET",
     dataType: 'JSONP',
   }).then(function (response) {
-    console.log(response)
 
 
 
@@ -52,7 +50,6 @@ function walmartSearch() {
           (function(i){
 
             var trunD = prettyU(response.items[i].shortDescription)
-            console.log("prettyU check:  " + trunD)
             var newDiv = []
             newDiv[i] = $("<div>")
             newDiv[i].html(response.items[i].name)
