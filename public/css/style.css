@@ -15,3 +15,7 @@ body {
   height: 300px;
   width: 300px;
 }
+
+.input-group-append{
+  margin-bottom: 15px;
+}
