@@ -6,9 +6,16 @@ body {
   color: black;
 }
 
+.walmart-output:hover,
+.walmart-output:active {
+  background-color: skyblue;
+  cursor: pointer;
+}
+
 .popover {
   max-width: 450px;
 }
+
 #outputrow {
   background: white;
   opacity: 0.8
@@ -19,6 +26,6 @@ body {
   width: 300px;
 }
 
-.input-group-append{
+.input-group-append {
   margin-bottom: 15px;
 }
