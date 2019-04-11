@@ -133,6 +133,8 @@ function graph() {
       dataType: 'JSONP',
       }).then(function(graphResponse) {
     console.log(graphResponse)
+    dateArray = []
+    priceArray = []
     for (i=0; i<graphResponse.findCompletedItemsResponse[0].searchResult[0].item.length; i++) {
       var soldDate = graphResponse.findCompletedItemsResponse[0].searchResult[0].item[i].listingInfo[0].endTime[0]
       var soldPrice = graphResponse.findCompletedItemsResponse[0].searchResult[0].item[i].sellingStatus[0].currentPrice[0].__value__
@@ -156,6 +158,23 @@ function graph() {
     console.log(chartData)
     
     finalArray = createDataArray(dateArray, priceArray)
+    chart = new CanvasJS.Chart("chartContainer", {
+      animationEnabled: true,
+      theme: "light2",
+      title:{
+        text: "Completed Auctions"
+      },
+      axisY:{
+        includeZero: false
+      },
+      data: [{        
+        type: "line",   
+        xValueType: "dateTime",    
+        dataPoints: finalArray
+      }]
+    })
+    chart.render()
+
       })
 }
 
@@ -189,6 +208,6 @@ var chart = new CanvasJS.Chart("chartContainer", {
     xValueType: "dateTime",    
 		dataPoints: finalArray
 	}]
-});
+})
 
 
