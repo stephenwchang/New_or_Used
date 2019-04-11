@@ -2,6 +2,8 @@
 
 $.backstretch("../images/background.gif");
 
+
+
 $(function () {
   $('[data-toggle="popover"]').popover({
     container: 'body'
@@ -33,6 +35,7 @@ function prettyU(string) {
 }
 
 var searchTerm = ""
+var upcObj = {}
 
 function walmartSearch() {
 
@@ -61,12 +64,14 @@ function walmartSearch() {
             newDiv[i].attr("tabindex", 0)
             newDiv[i].attr("title", "<div class=\"container\"> <div class=\"row\"> <div class=\"col-6\"> <a href=" + response.items[i].productUrl + ">" + response.items[i].name + "</a> </div>")
             newDiv[i].attr("data-html", "true")
+            newDiv[i].attr("upc-track", response.items[i].upc)
             newDiv[i].appendTo("#outputrow")
 
             var upcNumber = response.items[i].upc
             var currentTitleContent = newDiv[i].attr("title")
             var currentDataContent = newDiv[i].attr("data-content")
             var ebayQueryURL = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.13.0&SECURITY-APPNAME=RyanChes-EbaySear-PRD-d13d69895-95fa1322&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=" + upcNumber
+            
 
             $.ajax({
               url: ebayQueryURL,
@@ -100,3 +105,109 @@ $("#input").keypress(function () {
     walmartSearch()
   }
 })
+
+
+
+//Grab graph data
+var currentUPC = ""
+var graphURL = ""
+var currentTitle = ""
+var chartData = {}
+var graphResponse = {}
+var dateArray = []
+var priceArray = []
+var finalArray = []
+
+$(document).on("click", ".walmart-output", function () {
+    currentUPC = $(this).attr("upc-track")
+    currentTitle = $(this).html()
+    graphURL = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findCompletedItems&SERVICE-VERSION=1.13.0&SECURITY-APPNAME=RyanChes-EbaySear-PRD-d13d69895-95fa1322&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords="+currentUPC +"&itemFilter(0).name=SoldItemsOnly&itemFilter(0).value=true&sortOrder=EndTimeSoonest&paginationInput.entriesPerPage=100"
+    console.log("currentUPC: " + currentUPC)
+    console.log("currentTitle:  " + currentTitle)
+})
+
+function graph() {
+    $.ajax({
+      url: graphURL,
+      method: "GET",
+      dataType: 'JSONP',
+      }).then(function(graphResponse) {
+    console.log(graphResponse)
+    dateArray = []
+    priceArray = []
+    for (i=0; i<graphResponse.findCompletedItemsResponse[0].searchResult[0].item.length; i++) {
+      var soldDate = graphResponse.findCompletedItemsResponse[0].searchResult[0].item[i].listingInfo[0].endTime[0]
+      var soldPrice = graphResponse.findCompletedItemsResponse[0].searchResult[0].item[i].sellingStatus[0].currentPrice[0].__value__
+
+      if (soldDate == null) {
+        soldDate = "unknown"
+      }
+
+      if (soldPrice == null) {
+        soldPrice = "unknown"
+      }
+
+      dateArray.push(moment(soldDate).unix()*1000)
+      priceArray.push(parseInt(soldPrice))
+      
+
+      chartData[soldDate] = parseInt(soldPrice)
+
+    }
+    console.log("Chart Data!")
+    console.log(chartData)
+    
+    finalArray = createDataArray(dateArray, priceArray)
+    chart = new CanvasJS.Chart("chartContainer", {
+      animationEnabled: true,
+      theme: "light2",
+      title:{
+        text: "Completed Auctions"
+      },
+      axisY:{
+        includeZero: false
+      },
+      data: [{        
+        type: "line",   
+        xValueType: "dateTime",    
+        dataPoints: finalArray
+      }]
+    })
+    chart.render()
+
+      })
+}
+
+//create datapoint Array
+
+function createDataArray(dateArray, priceArray) {
+  var datapoints = []
+  for (i=0; i<dateArray.length; i++){
+    var pointObj = {
+      x: dateArray[i],
+      y: priceArray[i]
+    }
+    datapoints.push(pointObj)
+  }
+  return datapoints
+}
+
+//render chart
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2",
+	title:{
+		text: "Completed Auctions"
+	},
+	axisY:{
+		includeZero: false
+	},
+	data: [{        
+    type: "line",   
+    xValueType: "dateTime",    
+		dataPoints: finalArray
+	}]
+})
+
+
