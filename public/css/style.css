@@ -10,6 +10,13 @@ body {
 .walmart-output:active {
   background-color: skyblue;
   cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
+  transition: box-shadow 0.3s;
+}
+
+.walmart-output:hover {
+  box-shadow: 15px 15px 15px rgba(0,0,0,0.5);
 }
 
 .popover {
