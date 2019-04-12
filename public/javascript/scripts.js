@@ -98,6 +98,7 @@ function walmartSearch() {
         }
     })
 
+
 }
 
 $("#searchBTN").click(function (event) {
@@ -135,18 +136,19 @@ $(document).on("click", ".walmart-output", function () {
     graphURL = "https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findCompletedItems&SERVICE-VERSION=1.13.0&SECURITY-APPNAME=RyanChes-EbaySear-PRD-d13d69895-95fa1322&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords="+currentUPC +"&itemFilter(0).name=SoldItemsOnly&itemFilter(0).value=true&sortOrder=EndTimeSoonest&paginationInput.entriesPerPage=100"
     console.log("currentUPC: " + currentUPC)
     console.log("currentTitle:  " + currentTitle)
+
 })
 
 function graph() {
-    $.ajax({
-      url: graphURL,
-      method: "GET",
-      dataType: 'JSONP',
-      }).then(function(graphResponse) {
+  $.ajax({
+    url: graphURL,
+    method: "GET",
+    dataType: 'JSONP',
+  }).then(function (graphResponse) {
     console.log(graphResponse)
     dateArray = []
     priceArray = []
-    for (i=0; i<graphResponse.findCompletedItemsResponse[0].searchResult[0].item.length; i++) {
+    for (i = 0; i < graphResponse.findCompletedItemsResponse[0].searchResult[0].item.length; i++) {
       var soldDate = graphResponse.findCompletedItemsResponse[0].searchResult[0].item[i].listingInfo[0].endTime[0]
       var soldPrice = graphResponse.findCompletedItemsResponse[0].searchResult[0].item[i].sellingStatus[0].currentPrice[0].__value__
 
@@ -158,7 +160,7 @@ function graph() {
         soldPrice = "unknown"
       }
 
-      dateArray.push(moment(soldDate).unix()*1000)
+      dateArray.push(moment(soldDate).unix() * 1000)
       priceArray.push(parseInt(soldPrice))
 
 
@@ -172,10 +174,10 @@ function graph() {
     chart = new CanvasJS.Chart("chartContainer", {
       animationEnabled: true,
       theme: "light2",
-      title:{
+      title: {
         text: "Completed Auctions"
       },
-      axisY:{
+      axisY: {
         includeZero: false
       },
       data: [{
@@ -186,14 +188,14 @@ function graph() {
     })
     chart.render()
 
-      })
+  })
 }
 
 //create datapoint Array
 
 function createDataArray(dateArray, priceArray) {
   var datapoints = []
-  for (i=0; i<dateArray.length; i++){
+  for (i = 0; i < dateArray.length; i++) {
     var pointObj = {
       x: dateArray[i],
       y: priceArray[i]
@@ -206,17 +208,17 @@ function createDataArray(dateArray, priceArray) {
 //render chart
 
 var chart = new CanvasJS.Chart("chartContainer", {
-	animationEnabled: true,
-	theme: "light2",
-	title:{
-		text: "Completed Auctions"
-	},
-	axisY:{
-		includeZero: false
-	},
-	data: [{
+  animationEnabled: true,
+  theme: "light2",
+  title: {
+    text: "Completed Auctions"
+  },
+  axisY: {
+    includeZero: false
+  },
+  data: [{
     type: "line",
     xValueType: "dateTime",
-		dataPoints: finalArray
-	}]
+    dataPoints: finalArray
+  }]
 })
