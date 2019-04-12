@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-$.backstretch("../images/background.gif");
+$.backstretch("./static/images/background.gif");
 
 
 
@@ -61,7 +61,7 @@ function walmartSearch() {
             newDiv[i] = $("<div>")
             newDiv[i].html(response.items[i].name)
             newDiv[i].attr("class", "col-8 walmart-output")
-            newDiv[i].attr("data-content","<div class=\"container\"><div class=\"row\"> <div class=\"col-6\"> Price:  $"+ response.items[i].salePrice + "</a> <br> <a>" + truncate(trunD, 180) + "</a> <br> <img width='200px' max-height='200px' src="+ response.items[i].largeImage + "></div>")
+            newDiv[i].attr("data-content","<div class=\"container\"><div class=\"row\"> <div class=\"col-6\"> Price:  <b>$"+ response.items[i].salePrice + "</b></a> <br> <a>" + truncate(trunD, 180) + "</a> <br> <img width='200px' max-height='200px' src="+ response.items[i].largeImage + "></div>")
             newDiv[i].attr("data-toggle", "popover")
             newDiv[i].attr("data-placement", "right")
             newDiv[i].attr("data-trigger", "focus")
@@ -82,7 +82,14 @@ function walmartSearch() {
               method: "GET",
               dataType: 'JSONP',
               }).then(function(ebayResponse) {
-                newDiv[i].attr("data-content", currentDataContent + "<div class=\"col-6\"> <a> Current Bid:  $" + ebayResponse.findItemsByKeywordsResponse[0].searchResult[0].item[0].sellingStatus[0].currentPrice[0].__value__ + "</a> <br>" + ebayResponse.findItemsByKeywordsResponse[0].searchResult[0].item[0].subtitle + "<br> <img width='200px' max-height='200px' src="+ ebayResponse.findItemsByKeywordsResponse[0].searchResult[0].item[0].galleryURL + "></div></div></div>")
+                var subtitle;
+                if (ebayResponse.findItemsByKeywordsResponse[0].searchResult[0].item[0].subtitle) {
+                  subtitle = ebayResponse.findItemsByKeywordsResponse[0].searchResult[0].item[0].subtitle
+                } else {
+                  subtitle = ""
+                }
+
+                newDiv[i].attr("data-content", currentDataContent + "<div class=\"col-6\"> <a> Current Bid:  <b>$" + ebayResponse.findItemsByKeywordsResponse[0].searchResult[0].item[0].sellingStatus[0].currentPrice[0].__value__ + "</b></a> <br>" + subtitle + "<br> <img width='200px' max-height='200px' src="+ ebayResponse.findItemsByKeywordsResponse[0].searchResult[0].item[0].galleryURL + "></div></div></div>")
                 newDiv[i].attr("title", currentTitleContent + "<div class=\"col-6\"> <a href =" + ebayResponse.findItemsByKeywordsResponse[0].searchResult[0].item[0].viewItemURL + ">" + ebayResponse.findItemsByKeywordsResponse[0].searchResult[0].item[0].title + "</a></div></div></div>")
               })
 
