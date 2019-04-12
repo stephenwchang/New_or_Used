@@ -22,7 +22,7 @@ body {
 .popover {
   max-width: 450px;
   box-shadow: 3px 3px 3px gray;
-  transition: 0.1s;
+  transition: 0.3s;
 }
 
 .popover:hover {
