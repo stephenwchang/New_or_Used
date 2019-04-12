@@ -14,8 +14,12 @@ $(function () {
 $(document).on("click", ".walmart-output", function () {
   $(function () {
     $('.walmart-output').popover()
+
+    graph()
   })
 })
+
+
 
 function truncate(string, x) {
   if (string.length > x) {
@@ -71,7 +75,7 @@ function walmartSearch() {
             var currentTitleContent = newDiv[i].attr("title")
             var currentDataContent = newDiv[i].attr("data-content")
             var ebayQueryURL = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.13.0&SECURITY-APPNAME=RyanChes-EbaySear-PRD-d13d69895-95fa1322&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=" + upcNumber
-            
+
 
             $.ajax({
               url: ebayQueryURL,
@@ -149,14 +153,14 @@ function graph() {
 
       dateArray.push(moment(soldDate).unix()*1000)
       priceArray.push(parseInt(soldPrice))
-      
+
 
       chartData[soldDate] = parseInt(soldPrice)
 
     }
     console.log("Chart Data!")
     console.log(chartData)
-    
+
     finalArray = createDataArray(dateArray, priceArray)
     chart = new CanvasJS.Chart("chartContainer", {
       animationEnabled: true,
@@ -167,9 +171,9 @@ function graph() {
       axisY:{
         includeZero: false
       },
-      data: [{        
-        type: "line",   
-        xValueType: "dateTime",    
+      data: [{
+        type: "line",
+        xValueType: "dateTime",
         dataPoints: finalArray
       }]
     })
@@ -203,11 +207,9 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	axisY:{
 		includeZero: false
 	},
-	data: [{        
-    type: "line",   
-    xValueType: "dateTime",    
+	data: [{
+    type: "line",
+    xValueType: "dateTime",
 		dataPoints: finalArray
 	}]
 })
-
-
