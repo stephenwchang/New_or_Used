@@ -1,23 +1,22 @@
 $.backstretch('../images/background.gif');
 
 
-$(function () {
-  $('[data-toggle="popover"]').popover()
-})
+$(() => {
+  $('[data-toggle="popover"]').popover();
+});
 
-$(document).on("click", ".ebay-output", function () {
-  $(function () {
-    $('.ebay-output').popover()
-  })
-})
+$(document).on('click', '.ebay-output', () => {
+  $(() => {
+    $('.ebay-output').popover();
+  });
+});
 
 function truncate(string, x) {
   if (string.length > x) {
-    y = string.substring(0, x)
-    return y + " (. . .) "
-  } else {
-    return string
+    y = string.substring(0, x);
+    return `${y} (. . .) `;
   }
+  return string;
 }
 
 function prettyU(string) {
@@ -37,7 +36,6 @@ function ebaySearch() {
     method: 'GET',
     dataType: 'JSONP',
   }).then((response) => {
-
     for (i = 0; i < response.findItemsByKeywordsResponse[0].searchResult[0].item.length; i++) {
       const newDiv = $('<div>');
       newDiv.html(response.findItemsByKeywordsResponse[0].searchResult[0].item[i].title);
