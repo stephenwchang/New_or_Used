@@ -74,7 +74,7 @@ function walmartSearch() {
             var upcNumber = response.items[i].upc
             var currentTitleContent = newDiv[i].attr("title")
             var currentDataContent = newDiv[i].attr("data-content")
-            var ebayQueryURL = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.13.0&SECURITY-APPNAME=RyanChes-EbaySear-PRD-d13d69895-95fa1322&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=" + upcNumber
+            var ebayQueryURL = "https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.13.0&SECURITY-APPNAME=RyanChes-EbaySear-PRD-d13d69895-95fa1322&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=" + upcNumber
 
 
             $.ajax({
@@ -89,7 +89,7 @@ function walmartSearch() {
                   subtitle = ""
                 }
 
-                newDiv[i].attr("data-content", currentDataContent + "<div class=\"col-6\"> <a> Current Bid:  <b>$" + ebayResponse.findItemsByKeywordsResponse[0].searchResult[0].item[0].sellingStatus[0].currentPrice[0].__value__ + "</b></a> <br>" + subtitle + "<br> <img width='200px' max-height='200px' src="+ ebayResponse.findItemsByKeywordsResponse[0].searchResult[0].item[0].galleryURL + "></div></div></div>")
+                newDiv[i].attr("data-content", currentDataContent + "<div class=\"col-6\"> <a> Current Bid:  <b>$" + ebayResponse.findItemsByKeywordsResponse[0].searchResult[0].item[0].sellingStatus[0].currentPrice[0].__value__ + "</b></a> <br>" + subtitle + "<br><br> <img width='200px' max-height='200px' src="+ ebayResponse.findItemsByKeywordsResponse[0].searchResult[0].item[0].galleryURL + "></div></div></div>")
                 newDiv[i].attr("title", currentTitleContent + "<div class=\"col-6\"> <a href =" + ebayResponse.findItemsByKeywordsResponse[0].searchResult[0].item[0].viewItemURL + ">" + ebayResponse.findItemsByKeywordsResponse[0].searchResult[0].item[0].title + "</a></div></div></div>")
               })
 
